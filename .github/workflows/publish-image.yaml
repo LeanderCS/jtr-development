@@ -1,0 +1,41 @@
+name: Docker Image CI for GHCR
+
+on:
+  push
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and push jtr image
+        run: |
+          docker login --username ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }} ghcr.io
+
+          docker build --platform linux/amd64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-backend:latest-amd64 ./backend
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-backend:latest-amd64
+
+          docker build --platform linux/arm64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-backend:latest-arm64 ./backend
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-backend:latest-arm64
+          
+          docker build --platform linux/amd64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-worker:latest-amd64 ./worker
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-worker:latest-amd64
+
+          docker build --platform linux/arm64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-worker:latest-arm64 ./worker
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-worker:latest-arm64
+          
+          docker build --platform linux/amd64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-frontend-test:latest-amd64 ./frontend -f ./frontend/test.Dockerfile
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-frontend-test:latest-amd64
+
+          docker build --platform linux/arm64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-frontend-test:latest-arm64 ./frontend -f ./frontend/test.Dockerfile
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr-frontend-test:latest-arm64
+
+      #  uses: docker/build-push-action@v2
+      #  with:
+      #    context: .
+      #    file: ./Dockerfile
+      #    push: true
+      #    tags: ${{ secrets.GHCR_REGISTRY }}/${{ github.repository }}:latest
+      #    build-args: |
+      #      GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
