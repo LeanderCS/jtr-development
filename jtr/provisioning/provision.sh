@@ -1,25 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-cd /home/backend
+exec > >(tee -a /var/log/provision.log) 2> >(tee -a /var/log/provision_error.log >&2)
 
-python3 -m venv venv
-. venv/bin/activate
+SCRIPT_DIR=$(cd `dirname ${BASH_SOURCE[0]}` && pwd)
+source ${SCRIPT_DIR}/helper/functions.sh
 
-pip install -r requirements.txt > /dev/null 2>&1 || { echo "pip install failed"; exit 1; }
+####################
+new_section "Initialize"
 
-echo "Waiting for MySQL to start"
-while ! nc -z localhost 3307; do
-  sleep 1
-done
-echo "MySQL started"
+run_always "Ensure that all old caches are deleted" \
+ . "/bin/bash ${SCRIPT_DIR}/general/clear-cache.sh"
 
-python - <<END
+run_always "Ensure that all backend packages are installed" \
+  . "/bin/bash ${SCRIPT_DIR}/project/build-backend.sh"
 
-from config.app import createApp
-from DataDomain.Database.db import initDatabase
+run_always "Ensure that all worker services are installed" \
+  . "/bin/bash ${SCRIPT_DIR}/project/build-worker.sh"
 
-app = createApp()
+run_always "Ensure that the database is up to date" \
+  . "/bin/bash ${SCRIPT_DIR}/project/database.sh"
 
-initDatabase(app)
-
-END
+run_always "Ensure that all database tables are created" \
+  . "/bin/bash ${SCRIPT_DIR}/project/init-database.sh"

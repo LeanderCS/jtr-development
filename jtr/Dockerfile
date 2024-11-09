@@ -21,17 +21,14 @@ RUN apt-get update && \
 
 RUN rabbitmq-plugins enable rabbitmq_management
 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 
 COPY . /opt/scripts
 
 COPY rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
 
-RUN chmod +x /opt/scripts/entrypoint.sh  \
-    /opt/scripts/provision.sh  \
-    /opt/scripts/worker.sh \
-    /opt/scripts/test_services.sh \
-    /opt/scripts/provisioning/database.sh
+RUN find /opt/scripts -type f -name "*.sh" -exec chmod +x {} \;
 
 EXPOSE 3307 5001 5672 6379 15672
 

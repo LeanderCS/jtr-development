@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 echo "Prüfe MySQL"
 nc -z localhost 3307 && echo "MySQL läuft" || echo "MySQL läuft nicht"
