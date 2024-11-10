@@ -31,3 +31,8 @@ run_always "Ensure that the backend service is started" \
 
 run_always "Ensure that the worker service is started" \
   . "/bin/bash ${SCRIPT_DIR}/project/run-worker.sh"
+
+####################
+new_section "Finish"
+
+run_nothing "The provisioning was successful. Have fun developing."
