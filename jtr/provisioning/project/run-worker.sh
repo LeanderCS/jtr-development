@@ -2,4 +2,4 @@
 
 cd /home/backend/worker
 
-exec celery -A tasks worker --loglevel=info
+nohup celery -A tasks worker --loglevel=info > /var/log/worker.log 2>&1 &

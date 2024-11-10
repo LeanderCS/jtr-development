@@ -4,7 +4,6 @@ set -u # Exit immediately if a variable is not defined.
 
 # Services
 redis-cli flushall
-sudo rm -rf /var/log/*
 
 # Backend
 sudo rm -rf /home/backend/venv

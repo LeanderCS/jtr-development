@@ -4,4 +4,4 @@ cd /home/backend
 
 . venv/bin/activate
 
-exec python3 run.py
+nohup python3 run.py > /var/log/backend.log 2>&1 &

@@ -15,21 +15,15 @@ RUN apt-get update && \
         python3.12-venv \
         rabbitmq-server \
         redis-server \
-        sudo \
-        supervisor && \
+        sudo && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rabbitmq-plugins enable rabbitmq_management
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY supervisord.conf /etc/supervisor/supervisord.conf
-
-COPY . /opt/scripts
-
-COPY rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
+COPY provisioning /opt/scripts/provisioning
 
 RUN find /opt/scripts -type f -name "*.sh" -exec chmod +x {} \;
 
 EXPOSE 3307 5001 5672 6379 15672
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+ENTRYPOINT ["/opt/scripts/provisioning/entrypoint.sh"]

@@ -22,3 +22,12 @@ run_always "Ensure that the database is up to date" \
 
 run_always "Ensure that all database tables are created" \
   . "/bin/bash ${SCRIPT_DIR}/project/init-database.sh"
+
+####################
+new_section "Start services"
+
+run_always "Ensure that the backend service is started" \
+  . "/bin/bash ${SCRIPT_DIR}/project/run-backend.sh"
+
+run_always "Ensure that the worker service is started" \
+  . "/bin/bash ${SCRIPT_DIR}/project/run-worker.sh"
