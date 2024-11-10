@@ -11,7 +11,7 @@ new_section "Initialize"
 run_always "Ensure that all old caches are deleted" \
  . "/bin/bash ${SCRIPT_DIR}/general/clear-cache.sh"
 
-run_always "Ensure that all backend packages are installed" \
+run_always "Ensure that all backend packages are installed and up to date" \
   . "/bin/bash ${SCRIPT_DIR}/project/build-backend.sh"
 
 run_always "Ensure that all worker services are installed" \
@@ -35,4 +35,4 @@ run_always "Ensure that the worker service is started" \
 ####################
 new_section "Finish"
 
-run_nothing "The provisioning was successful. Have fun developing."
+run_nothing "Provisioning done."

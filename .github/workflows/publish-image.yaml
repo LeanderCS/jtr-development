@@ -4,7 +4,7 @@ on:
   push
 
 jobs:
-  build_and_publish:
+  Build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
