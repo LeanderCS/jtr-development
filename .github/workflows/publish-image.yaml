@@ -13,8 +13,8 @@ jobs:
         run: |
           docker login --username ${{ secrets.GHCR_USERNAME }} --password ${{ secrets.GHCR_TOKEN }} ghcr.io
 
-          docker build --platform linux/amd64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-amd64 ./jtr
+          docker build --platform linux/amd64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-amd64 .
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-amd64
 
-          docker build --platform linux/arm64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-arm64 ./jtr
+          docker build --platform linux/arm64 -t ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-arm64 .
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/jtr:latest-arm64

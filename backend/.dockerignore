@@ -1,5 +1,0 @@
-*.md
-.git
-../.idea/.gitignore
-
-worker
