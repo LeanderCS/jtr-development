@@ -17,8 +17,8 @@ run_always "Ensure that all backend packages are installed and up to date" \
 run_always "Ensure that all worker services are installed and up to date" \
   . "/bin/bash ${SCRIPT_DIR}/project/build-worker.sh"
 
-run_always "Ensure that all frontend packages are installed and up to date" \
-  . "/bin/bash ${SCRIPT_DIR}/project/build-frontend.sh"
+#run_always "Ensure that all frontend packages are installed and up to date" \
+#  . "/bin/bash ${SCRIPT_DIR}/project/build-frontend.sh"
 
 run_always "Ensure that the database is up to date" \
   . "/bin/bash ${SCRIPT_DIR}/project/database.sh"

@@ -9,7 +9,6 @@ RUN apt-get update && \
         erlang \
         gnupg \
         netcat-openbsd \
-        npm \
         iputils-ping \
         python3 \
         python3-pip \
