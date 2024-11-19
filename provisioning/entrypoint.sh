@@ -29,7 +29,7 @@ wait_for_port() {
     done
 }
 
-trap stop_services SIGTERM SIGINT
+#trap stop_services SIGTERM SIGINT
 
 start_services
 

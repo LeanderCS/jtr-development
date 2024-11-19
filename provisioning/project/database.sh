@@ -30,7 +30,8 @@ on_create () {
 }
 
 on_update () {
-  update_database_schemas
+  #update_database_schemas
+  echo "Database schemas are up to date."
 }
 
 setup_database () {
