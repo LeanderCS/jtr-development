@@ -15,7 +15,8 @@ RUN apt-get update && \
         python3.12-venv \
         rabbitmq-server \
         redis-server \
-        sudo && \
+        sudo  \
+        git && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rabbitmq-plugins enable rabbitmq_management
